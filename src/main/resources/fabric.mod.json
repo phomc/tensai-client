@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "tensai-client",
+  "name": "Tensai Client",
+  "version": "${version}",
+  "environment": "client",
+  "license": "MIT",
+  "authors": [
+    "VMSA"
+  ],
+  "depends": {
+    "java": ">=17",
+    "minecraft": ">=1.16.5"
+  },
+  "entrypoints": {
+    "main": [
+      "dev.vmsa.tensai.client.TensaiFabricClient"
+    ]
+  },
+  "mixins": [
+  ]
+}
