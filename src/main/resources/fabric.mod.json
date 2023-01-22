@@ -6,15 +6,15 @@
   "environment": "client",
   "license": "MIT",
   "authors": [
-    "VMSA"
+    "PhoMC"
   ],
   "depends": {
     "java": ">=17",
     "minecraft": ">=1.16.5"
   },
   "entrypoints": {
-    "main": [
-      "dev.vmsa.tensai.client.TensaiFabricClient"
+    "client": [
+      "dev.phomc.tensai.client.TensaiFabricClient"
     ]
   },
   "mixins": [
