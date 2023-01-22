@@ -9,3 +9,6 @@ pluginManagement {
 }
 
 rootProject.name = 'tensai-client'
+
+include ':shared'
+project(':shared').projectDir = file("shared")
