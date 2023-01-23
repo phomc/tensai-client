@@ -22,21 +22,22 @@
  * SOFTWARE.
  */
 
-package dev.phomc.tensai.client;
+package dev.phomc.tensai.client.mixin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Map;
 
-import net.fabricmc.api.ClientModInitializer;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-import dev.phomc.tensai.client.keybinding.KeyBindingMessenger;
+import net.minecraft.client.util.InputUtil;
 
-public class TensaiFabricClient implements ClientModInitializer {
-	public static final String MOD_ID = "tensai-client";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-	@Override
-	public void onInitializeClient() {
-		KeyBindingMessenger.getInstance().onInitialize();
+@Mixin(targets = "net.minecraft.client.option.KeyBinding")
+public interface KeyBindingMixin {
+	@Accessor("KEY_TO_BINDINGS")
+	static Map<InputUtil.Key, net.minecraft.client.option.KeyBinding> getKeyCodeMapping() {
+		throw new AssertionError();
 	}
+
+	@Accessor("timesPressed")
+	int getTimesPressed();
 }

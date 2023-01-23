@@ -22,21 +22,30 @@
  * SOFTWARE.
  */
 
-package dev.phomc.tensai.client;
+package dev.phomc.tensai.client.mixin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.fabricmc.api.ClientModInitializer;
+import dev.phomc.tensai.client.i18n.CustomTranslationStorage;
 
-import dev.phomc.tensai.client.keybinding.KeyBindingMessenger;
+@Mixin(targets = "net.minecraft.client.resource.language.TranslationStorage")
+public abstract class TranslationStorageMixin {
+	@Inject(method = "get(Ljava/lang/String;)Ljava/lang/String;", at = @At("RETURN"), cancellable = true)
+	private void getCustomTranslation(String key, CallbackInfoReturnable<String> cir) {
+		String s = CustomTranslationStorage.getInstance().get(key);
+		if(s != null) {
+			cir.setReturnValue(s);
+		}
+	}
 
-public class TensaiFabricClient implements ClientModInitializer {
-	public static final String MOD_ID = "tensai-client";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-	@Override
-	public void onInitializeClient() {
-		KeyBindingMessenger.getInstance().onInitialize();
+	@Inject(method = "hasTranslation(Ljava/lang/String;)Z", at = @At("RETURN"), cancellable = true)
+	private void hasCustomTranslation(String key, CallbackInfoReturnable<Boolean> cir) {
+		String s = CustomTranslationStorage.getInstance().get(key);
+		if(s != null) {
+			cir.setReturnValue(true);
+		}
 	}
 }

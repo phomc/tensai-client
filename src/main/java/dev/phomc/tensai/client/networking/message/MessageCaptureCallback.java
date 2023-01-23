@@ -22,21 +22,10 @@
  * SOFTWARE.
  */
 
-package dev.phomc.tensai.client;
+package dev.phomc.tensai.client.networking.message;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
 
-import net.fabricmc.api.ClientModInitializer;
-
-import dev.phomc.tensai.client.keybinding.KeyBindingMessenger;
-
-public class TensaiFabricClient implements ClientModInitializer {
-	public static final String MOD_ID = "tensai-client";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-	@Override
-	public void onInitializeClient() {
-		KeyBindingMessenger.getInstance().onInitialize();
-	}
+public interface MessageCaptureCallback {
+	void respond(byte[] data, PacketSender sender);
 }

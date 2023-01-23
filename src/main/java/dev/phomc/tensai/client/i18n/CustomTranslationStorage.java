@@ -22,21 +22,31 @@
  * SOFTWARE.
  */
 
-package dev.phomc.tensai.client;
+package dev.phomc.tensai.client.i18n;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.fabricmc.api.ClientModInitializer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import dev.phomc.tensai.client.keybinding.KeyBindingMessenger;
+public class CustomTranslationStorage {
+	private static final CustomTranslationStorage INSTANCE = new CustomTranslationStorage();
 
-public class TensaiFabricClient implements ClientModInitializer {
-	public static final String MOD_ID = "tensai-client";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	@NotNull
+	public static CustomTranslationStorage getInstance() {
+		return INSTANCE;
+	}
 
-	@Override
-	public void onInitializeClient() {
-		KeyBindingMessenger.getInstance().onInitialize();
+	private final Map<String, String> translations = new HashMap<>();
+
+	@Nullable
+	public String put(String key, String value) {
+		return translations.put(key, value);
+	}
+
+	@Nullable
+	public String get(String key) {
+		return translations.get(key);
 	}
 }

@@ -17,6 +17,7 @@ java {
 }
 
 dependencies {
+	implementation project(':shared')
 	minecraft("com.mojang:minecraft:$rootProject.minecraftVersion")
 	mappings("net.fabricmc:yarn:${rootProject.minecraftVersion}+${project.yarnVersion}:v2")
 	modImplementation("net.fabricmc:fabric-loader:${project.loaderVersion}")

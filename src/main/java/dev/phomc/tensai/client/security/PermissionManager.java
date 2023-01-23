@@ -22,21 +22,22 @@
  * SOFTWARE.
  */
 
-package dev.phomc.tensai.client;
+package dev.phomc.tensai.client.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.function.Consumer;
 
-import net.fabricmc.api.ClientModInitializer;
+import org.jetbrains.annotations.NotNull;
 
-import dev.phomc.tensai.client.keybinding.KeyBindingMessenger;
+public class PermissionManager {
+	private static final PermissionManager INSTANCE = new PermissionManager();
 
-public class TensaiFabricClient implements ClientModInitializer {
-	public static final String MOD_ID = "tensai-client";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static PermissionManager getInstance() {
+		return INSTANCE;
+	}
 
-	@Override
-	public void onInitializeClient() {
-		KeyBindingMessenger.getInstance().onInitialize();
+	public void tryGrant(@NotNull Permission permission, @NotNull Consumer<Boolean> callback) {
+		// TODO Pop up a prompt here and return the player's decision
+		// Also, save permission data
+		callback.accept(true);
 	}
 }

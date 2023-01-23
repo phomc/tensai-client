@@ -22,21 +22,28 @@
  * SOFTWARE.
  */
 
-package dev.phomc.tensai.client;
+package dev.phomc.tensai.client.events;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 
-import net.fabricmc.api.ClientModInitializer;
-
+import dev.phomc.tensai.client.keybinding.KeyBindingManager;
 import dev.phomc.tensai.client.keybinding.KeyBindingMessenger;
 
-public class TensaiFabricClient implements ClientModInitializer {
-	public static final String MOD_ID = "tensai-client";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+public class TickEventListener implements Listener {
+	private long counter;
 
 	@Override
-	public void onInitializeClient() {
-		KeyBindingMessenger.getInstance().onInitialize();
+	public void onInitialize() {
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			if (counter == Long.MAX_VALUE) {
+				counter = 0;
+			} else {
+				counter++;
+			}
+
+			if (counter % KeyBindingManager.getInstance().getInputDelay() == 0) {
+				KeyBindingMessenger.getInstance().onStateCheck();
+			}
+		});
 	}
 }
