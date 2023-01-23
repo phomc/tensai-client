@@ -24,38 +24,19 @@
 
 package dev.phomc.tensai.client;
 
-import dev.phomc.tensai.client.i18n.CustomTranslationStorage;
-import dev.phomc.tensai.keybinding.KeyCode;
-
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.fabricmc.api.ClientModInitializer;
 
+import dev.phomc.tensai.client.keybinding.KeyBindingMessenger;
+
 public class TensaiFabricClient implements ClientModInitializer {
 	public static final String MOD_ID = "tensai-client";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public KeyBinding keyBinding;
-
 	@Override
 	public void onInitializeClient() {
-		CustomTranslationStorage.getInstance().put("key.examplemod.spook", "V Key");
-		CustomTranslationStorage.getInstance().put("category.examplemod.test", "Test ctg");
-
-		keyBinding = KeyBindingHelper.registerKeyBinding(
-				new KeyBinding("key.examplemod.spook", InputUtil.Type.KEYSYM, KeyCode.getGLFWCode(KeyCode.KEY_V), "category.examplemod.test"
-		));
-
-		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			while (keyBinding.wasPressed()) {
-				client.player.sendMessage(Text.literal("Key V was pressed!"), false);
-			}
-		});
+		KeyBindingMessenger.getInstance().onInitialize();
 	}
 }

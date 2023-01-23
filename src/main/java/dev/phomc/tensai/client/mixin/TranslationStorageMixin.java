@@ -24,16 +24,15 @@
 
 package dev.phomc.tensai.client.mixin;
 
-import dev.phomc.tensai.client.i18n.CustomTranslationStorage;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import dev.phomc.tensai.client.i18n.CustomTranslationStorage;
+
 @Mixin(targets = "net.minecraft.client.resource.language.TranslationStorage")
 public abstract class TranslationStorageMixin {
-
 	@Inject(method = "get(Ljava/lang/String;)Ljava/lang/String;", at = @At("RETURN"), cancellable = true)
 	private void getCustomTranslation(String key, CallbackInfoReturnable<String> cir) {
 		String s = CustomTranslationStorage.getInstance().get(key);
@@ -49,5 +48,4 @@ public abstract class TranslationStorageMixin {
 			cir.setReturnValue(true);
 		}
 	}
-
 }

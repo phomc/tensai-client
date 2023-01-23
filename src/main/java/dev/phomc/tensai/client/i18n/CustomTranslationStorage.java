@@ -24,11 +24,11 @@
 
 package dev.phomc.tensai.client.i18n;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomTranslationStorage {
 	private static final CustomTranslationStorage INSTANCE = new CustomTranslationStorage();
